@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewmodel="clr-namespace:POSTab.ViewModels.Base"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:converter="clr-namespace:POSTab.Converters"
+             viewmodel:ViewModelLocator.AutoWireViewModel="True"
+             BackgroundColor="#80000000"
+             mc:Ignorable="d"
+             x:Class="POSTab.Views.Popup.ReceiptPopupPageView">
+    <pages:PopupPage.Resources>
+        <ResourceDictionary>
+            <converter:CultureConverter x:Key="CultureConverter"/>
+            <converter:ListToCountConverter x:Key="ListToCountConverter"/>
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="Black"/>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource DirtyWhite}"/>
+                <Setter Property="BorderColor" Value="{StaticResource LightGray50}"/>
+                <Setter Property="BorderWidth" Value="1"/>
+            </Style>
+        </ResourceDictionary>
+    </pages:PopupPage.Resources>
+    <!--Default Animation-->
+    <pages:PopupPage.Animation>
+        <animations:MoveAnimation  
+            PositionIn="Bottom"
+            PositionOut="Bottom"
+            DurationIn="250"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"/>
+    </pages:PopupPage.Animation>
+    <pages:PopupPage.Content>
+        <Grid BackgroundColor="{StaticResource LightYellow}"
+              VerticalOptions="EndAndExpand"
+              HorizontalOptions="FillAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <!-- receipt-->
+            <Grid Grid.Column="0" Padding="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="210"/>
+                    <RowDefinition />
+                    <RowDefinition Height="20"/>
+                </Grid.RowDefinitions>
+                <!-- image -->
+                <Image Grid.Row="0" Source="logo.png" Aspect="AspectFit" Margin="10,5,10,15"/>
+                <!-- receipt details -->
+                <Grid Grid.Row="1" Padding="20,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Grid.Row="0" Text="POS#   : 2" HorizontalOptions="Start"/>
+                    <Label Grid.Column="0" Grid.Row="1" Text="Cahier : Dorena" HorizontalOptions="Start"/>
+                    <Label Grid.Column="2" Grid.Row="0" Text="Date : 10/08/2020" HorizontalOptions="Start"/>
+                    <Label Grid.Column="2" Grid.Row="1" Text="Time : 11:00:00 PM" HorizontalOptions="Start"/>
+                </Grid>
+                <!-- header -->
+                <Grid Grid.Row="2" Padding="20,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Text="ITEM(S)" TextColor="{StaticResource Red}" HorizontalOptions="Start"/>
+                    <Label Grid.Column="1" Text="QTY" TextColor="{StaticResource Red}"/>
+                    <Label Grid.Column="2" Text="AMOUNT" TextColor="{StaticResource Red}"/>
+                    <Label Grid.Column="3" Text="TTL PRICE" TextColor="{StaticResource Red}"/>
+                    <BoxView Grid.ColumnSpan="4" BackgroundColor="{StaticResource DirtyWhite}" HorizontalOptions="FillAndExpand" VerticalOptions="Start" HeightRequest="2"/>
+                    <BoxView Grid.ColumnSpan="4" BackgroundColor="{StaticResource DirtyWhite}" HorizontalOptions="FillAndExpand" VerticalOptions="End" HeightRequest="2"/>
+                </Grid>
+                <!-- item list -->
+                <ListView Grid.Row="3" ItemsSource="{Binding Cart.Items}" HasUnevenRows="True" SeparatorVisibility="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid Margin="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout Grid.Column="0">
+                                        <Label Text="{Binding Name}" FontSize="Micro" FontFamily="{StaticResource QuickSand-Bold}"/>
+                                        <Label Text="{Binding ItemCode}"/>
+                                    </StackLayout>
+                                    <Label Grid.Column="1" Text="{Binding Quantity}"/>
+                                    <Label Grid.Column="2" Text="{Binding UnitPrice, Converter={StaticResource CultureConverter}}"/>
+                                    <Label Grid.Column="3" Text="{Binding TotalPrice, Converter={StaticResource CultureConverter}}"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <BoxView Grid.Row="3" BackgroundColor="{StaticResource DirtyWhite}" HorizontalOptions="FillAndExpand" VerticalOptions="End" HeightRequest="2"/>
+                <!-- cart total -->
+                <Grid Grid.Row="4" Padding="20,0" Margin="0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Text="TOTAL ITEMS"/>
+                    <Label Grid.Row="0" Grid.Column="1" Text=":"/>
+                    <Label Grid.Row="0" Grid.Column="2" Text="{Binding Cart.Items, Converter={StaticResource ListToCountConverter}}" HorizontalOptions="End"/>
+
+                    <Label Grid.Row="1" Grid.Column="0" Text="TOTAL AMOUNT"/>
+                    <Label Grid.Row="1" Grid.Column="1" Text=":"/>
+                    <Label Grid.Row="1" Grid.Column="2" Text="{Binding Cart.Total, Converter={StaticResource CultureConverter}}" HorizontalOptions="End"/>
+
+                    <Label Grid.Row="2" Grid.Column="0" Text="CASH"/>
+                    <Label Grid.Row="2" Grid.Column="1" Text=":"/>
+                    <Label Grid.Row="2" Grid.Column="2" Text="{Binding Cart.Tender, Converter={StaticResource CultureConverter}}" HorizontalOptions="End"/>
+
+                    <Label Grid.Row="3" Grid.Column="0" Text="CHANGE"/>
+                    <Label Grid.Row="3" Grid.Column="1" Text=":"/>
+                    <Label Grid.Row="3" Grid.Column="2" Text="{Binding Cart.Change, Converter={StaticResource CultureConverter}}" HorizontalOptions="End"/>
+                </Grid>
+                <Label Grid.Row="5" Text="Thank you!"/>
+            </Grid>
+            <!-- keypad -->
+            <StackLayout Grid.Column="1" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="{StaticResource DirtyWhite}">
+                <Label Text="{Binding Cart.Total, StringFormat='Total: {0}', Converter={StaticResource CultureConverter}}" FontSize="Large" FontFamily="{StaticResource QuickSand-Bold}"/>
+                <Label Text="{Binding Cart.Change, StringFormat='Change: {0}', Converter={StaticResource CultureConverter}}" FontSize="Small" TextColor="{StaticResource Red}"/>
+                <Grid HorizontalOptions="Center" VerticalOptions="Center" Margin="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Frame Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" HorizontalOptions="FillAndExpand" Padding="20,0">
+                        <Label Text="{Binding TenderInput, Converter={StaticResource CultureConverter}}" HorizontalTextAlignment="End" HorizontalOptions="FillAndExpand" FontSize="Medium"/>
+                    </Frame>
+
+                    <Button Grid.Row="1" Grid.Column="0" Text="1" Command="{Binding KeyInCommand}" CommandParameter="1"/>
+                    <Button Grid.Row="1" Grid.Column="1" Text="2" Command="{Binding KeyInCommand}" CommandParameter="2"/>
+                    <Button Grid.Row="1" Grid.Column="2" Text="3" Command="{Binding KeyInCommand}" CommandParameter="3"/>
+                    <Button Grid.Row="1" Grid.Column="3" Text="+" Command="{Binding KeyInCommand}" CommandParameter="+"/>
+
+                    <Button Grid.Row="2" Grid.Column="0" Text="4" Command="{Binding KeyInCommand}" CommandParameter="4"/>
+                    <Button Grid.Row="2" Grid.Column="1" Text="5" Command="{Binding KeyInCommand}" CommandParameter="5"/>
+                    <Button Grid.Row="2" Grid.Column="2" Text="6" Command="{Binding KeyInCommand}" CommandParameter="6"/>
+                    <Button Grid.Row="2" Grid.Column="3" Text="₱ 100"  Command="{Binding KeyInCommand}" CommandParameter="100"/>
+
+                    <Button Grid.Row="3" Grid.Column="0" Text="7" Command="{Binding KeyInCommand}" CommandParameter="7"/>
+                    <Button Grid.Row="3" Grid.Column="1" Text="8" Command="{Binding KeyInCommand}" CommandParameter="8"/>
+                    <Button Grid.Row="3" Grid.Column="2" Text="9" Command="{Binding KeyInCommand}" CommandParameter="9"/>
+                    <Button Grid.Row="3" Grid.Column="3" Text="₱ 500" Command="{Binding KeyInCommand}" CommandParameter="500"/>
+
+                    <Button Grid.Row="4" Grid.Column="0"  Text="C" Command="{Binding KeyInCommand}" CommandParameter="C"/>
+                    <Button Grid.Row="4" Grid.Column="1"  Text="00" Command="{Binding KeyInCommand}" CommandParameter="00"/>
+                    <Button Grid.Row="4" Grid.Column="2" Text="0" Command="{Binding KeyInCommand}" CommandParameter="0"/>
+                    <Button Grid.Row="4" Grid.Column="3" Text="₱ 1,000" Command="{Binding KeyInCommand}" CommandParameter="1000"/>
+
+                    <Button Grid.Row="5" Grid.ColumnSpan="4" Text="Charge" Command="{Binding ChargeCommand}" FontSize="Medium" FontFamily="{StaticResource QuickSand-Bold}" TextColor="White" BorderWidth="0"
+                            IsEnabled="{Binding ChargeButtonIsEnabled}"
+                            BackgroundColor="{Binding ChargeButtonColor}"/>
+
+
+                </Grid>
+            </StackLayout>
+            <ActivityIndicator
+                Grid.ColumnSpan="2"
+                Color="{StaticResource Red}"
+                IsRunning="{Binding IsBusy}"  
+                IsVisible="{Binding IsBusy}"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="CenterAndExpand">
+                <ActivityIndicator.WidthRequest>
+                    <OnPlatform x:TypeArguments="x:Double">
+                        <On Platform="iOS, Android" Value="100" />
+                        <On Platform="UWP, WinRT, WinPhone" Value="400" />
+                    </OnPlatform>
+                </ActivityIndicator.WidthRequest>
+            </ActivityIndicator>
+        </Grid>
+    </pages:PopupPage.Content>
+</pages:PopupPage>

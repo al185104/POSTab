@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="POSTab.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <!-- Color -->
+            <Color x:Key="Red">#FF2351</Color>
+            <Color x:Key="RedShadow">#FE2152</Color>
+            <Color x:Key="Yellow">#FFDB6D</Color>
+            <Color x:Key="LightYellow">#FDF3DA</Color>
+            <Color x:Key="DirtyWhite">#FAFAFA</Color>
+            <Color x:Key="LightGray">#B2B1B6</Color>
+            <Color x:Key="LightGray50">#7FB2B1B6</Color>
+            <!-- Material Font Icons -->
+            <OnPlatform x:TypeArguments="x:String" x:Key="MaterialIcons">
+                <On Platform="Android" Value="materialdesignicons-webfont.ttf#Material Design Icons" />
+            </OnPlatform>
+            <!-- Fonts -->
+            <OnPlatform x:TypeArguments="x:String" x:Key="QuickSand">
+                <On Platform="Android" Value="Quicksand-Regular.ttf#Quicksand Regular" />
+            </OnPlatform>
+            <OnPlatform x:TypeArguments="x:String" x:Key="QuickSand-Bold">
+                <On Platform="Android" Value="Quicksand-Bold.ttf#Quicksand Bold" />
+            </OnPlatform>
+            <OnPlatform x:TypeArguments="x:String" x:Key="QuickSand-Light">
+                <On Platform="Android" Value="Quicksand-Light.ttf#Quicksand Light" />
+            </OnPlatform>
+            <OnPlatform x:TypeArguments="x:String" x:Key="QuickSand-Medium">
+                <On Platform="Android" Value="Quicksand-Medium.ttf#Jost Medium" />
+            </OnPlatform>
+            <OnPlatform x:TypeArguments="x:String" x:Key="QuickSand-SemiBold">
+                <On Platform="Android" Value="Quicksand-SemiBold.ttf#Quicksand SemiBold" />
+            </OnPlatform>
+            <!-- Style -->
+            <Style TargetType="Label">
+                <Setter Property="FontFamily" Value="{StaticResource QuickSand}"/>
+                <Setter Property="TextColor" Value="{StaticResource LightGray}"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+                <Setter Property="FontSize" Value="Micro"/>
+            </Style>
+            <Style TargetType="StackLayout">
+                <Setter Property="Spacing" Value="0"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+            </Style>
+            <Style TargetType="Grid">
+                <Setter Property="ColumnSpacing" Value="0"/>
+                <Setter Property="RowSpacing" Value="0"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Margin" Value="0"/>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="FontFamily" Value="{StaticResource QuickSand}"/>
+                <Setter Property="CornerRadius" Value="0"/>
+            </Style>
+        </ResourceDictionary>        
+    </Application.Resources>
+</Application>

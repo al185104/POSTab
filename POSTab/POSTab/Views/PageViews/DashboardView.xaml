@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:microchart="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms" 
+             xmlns:viewmodel="clr-namespace:POSTab.ViewModels.Base"
+             viewmodel:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d"
+             x:Class="POSTab.Views.PageViews.DashboardView">
+  <ContentView.Content>
+        <RefreshView IsRefreshing="{Binding IsRefreshing}"
+             Command="{Binding RefreshCommand}">
+            <ScrollView>
+                <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="0" Margin="0">
+                    <Label Text="Monthly Dashboard" FontSize="Large" Padding="40,0" TextColor="{StaticResource Red}"/>
+                    <microchart:ChartView 
+                        Chart="{Binding Transactions}" 
+                        Margin="0" 
+                        BackgroundColor="Transparent"
+                        VerticalOptions="FillAndExpand" 
+                        HorizontalOptions="FillAndExpand"/>
+                </StackLayout>
+            </ScrollView>
+        </RefreshView>
+    </ContentView.Content>
+</ContentView>

@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:viewmodel="clr-namespace:POSTab.ViewModels.Base"
+             viewmodel:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:view="clr-namespace:POSTab.Views.PageViews"
+             xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             xmlns:gradient ="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms"
+             x:Class="POSTab.Views.MainPageView">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Frame">
+                <Setter Property="HasShadow" Value="False"/>
+                <Setter Property="CornerRadius" Value="8"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Margin" Value="8,0"/>
+                <Setter Property="VerticalOptions" Value="FillAndExpand"/>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid BackgroundColor="Red">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackLayout Grid.Column="0" BackgroundColor="White" Padding="2,20">
+                <Image Source="logo.png" Aspect="AspectFill" Margin="5,5,5,50"/>
+                <listview:SfListView ItemsSource="{Binding OptionSticker}" SelectedItem="{Binding SelectedOption}" ItemSize="50" ItemSpacing="0, 2" SelectionMode="Single">
+                    <listview:SfListView.SelectedItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Frame HasShadow="True">
+                                    <Grid>
+                                        <gradient:SfGradientView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                                            <gradient:SfGradientView.BackgroundBrush>
+                                                <gradient:SfLinearGradientBrush>
+                                                    <gradient:SfLinearGradientBrush.GradientStops>
+                                                        <gradient:SfGradientStop Color="{StaticResource Red}" Offset="0.0"/>
+                                                        <gradient:SfGradientStop Color="{StaticResource RedShadow}" Offset="1.1" />
+                                                    </gradient:SfLinearGradientBrush.GradientStops>
+                                                </gradient:SfLinearGradientBrush>
+                                            </gradient:SfGradientView.BackgroundBrush>
+                                        </gradient:SfGradientView>
+                                        <StackLayout>
+                                            <Label Text="{Binding StringLogo}" FontFamily="{StaticResource MaterialIcons}" FontSize="Large" TextColor="White"/>
+                                            <Label Text="{Binding Label}" TextColor="White" FontSize="8"/>
+                                        </StackLayout>
+                                    </Grid>
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </listview:SfListView.SelectedItemTemplate>
+                    <listview:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Frame>
+                                    <StackLayout HorizontalOptions="FillAndExpand">
+                                        <Label Text="{Binding StringLogo}" FontFamily="{StaticResource MaterialIcons}" FontSize="Large"/>
+                                        <Label Text="{Binding Label}" FontSize="8"/>
+                                    </StackLayout>
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </listview:SfListView.ItemTemplate>
+                </listview:SfListView>
+                <Label Text="Log Out"/>
+            </StackLayout>
+            <Grid Grid.Column="1" BackgroundColor="{StaticResource DirtyWhite}">
+                <view:HomeView IsVisible="True" Opacity="1" x:Name="Home"/>
+                <view:BillsView IsVisible="False" Opacity="0" x:Name="Bills"/>
+                <view:DashboardView IsVisible="False" Opacity="0" x:Name="Dashboard"/>
+                <view:MessagesView IsVisible="False" Opacity="0" x:Name="Messages"/>
+                <view:SettingsView IsVisible="False" Opacity="0" x:Name="Settings"/>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

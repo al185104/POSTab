@@ -1,0 +1,488 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:gradient ="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms"
+             xmlns:listView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:viewmodel="clr-namespace:POSTab.ViewModels.Base"
+             viewmodel:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:converter="clr-namespace:POSTab.Converters"
+             xmlns:helper="clr-namespace:POSTab.Helpers"
+             mc:Ignorable="d"
+             x:Class="POSTab.Views.PageViews.HomeView"
+             x:Name="ItemList">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converter:CultureConverter x:Key="CultureConverter"/>
+            <Style TargetType="Entry">
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+                <Setter Property="FontSize" Value="Micro"/>
+                <Setter Property="TextColor" Value="{StaticResource LightGray}"/>
+                <Setter Property="PlaceholderColor" Value="{StaticResource LightGray}"/>
+                <Setter Property="Margin" Value="0,-5,0,0"/>
+                <Setter Property="FontFamily" Value="{Binding QuickSand}"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="220"/>
+            </Grid.ColumnDefinitions>
+            <!-- Selection Panel -->
+            <Grid Grid.Column="0" BackgroundColor="{StaticResource DirtyWhite}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="90"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <StackLayout Grid.Row="0" Orientation="Horizontal" Padding="20" HorizontalOptions="FillAndExpand" >
+                    <Label Text="Menu" FontFamily="{StaticResource QuickSand-Bold}" FontSize="Large" Margin="3,0" TextColor="Black"/>
+                    <Label Text="Category" FontSize="Large" HorizontalOptions="StartAndExpand" TextColor="Black"/>
+                    <Frame WidthRequest="150" HeightRequest="20">
+                        <StackLayout Orientation="Horizontal" >
+                            <Label Text="{x:Static helper:IconFont.Magnify}" FontFamily="{StaticResource MaterialIcons}" FontSize="Medium"/>
+                            <Entry Placeholder="Search for items.."/>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+                
+                <!-- Category Panel -->
+                <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="5">
+                    <listView:SfListView Orientation="Horizontal" Grid.Row="1" ItemsSource="{Binding CategorySticker}" SelectedItem="{Binding SelectedCategory}" ItemSize="72" ItemSpacing="0" SelectionMode="Single" VerticalOptions="End">
+                        <listView:SfListView.SelectedItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Frame HasShadow="True">
+                                        <Grid>
+                                            <gradient:SfGradientView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                                                <gradient:SfGradientView.BackgroundBrush>
+                                                    <gradient:SfLinearGradientBrush>
+                                                        <gradient:SfLinearGradientBrush.GradientStops>
+                                                            <gradient:SfGradientStop Color="{StaticResource Red}" Offset="0.0"/>
+                                                            <gradient:SfGradientStop Color="{StaticResource RedShadow}" Offset="1.1" />
+                                                        </gradient:SfLinearGradientBrush.GradientStops>
+                                                    </gradient:SfLinearGradientBrush>
+                                                </gradient:SfGradientView.BackgroundBrush>
+                                            </gradient:SfGradientView>
+                                            <StackLayout HorizontalOptions="FillAndExpand">
+                                                <Label Text="{Binding StringLogo}" FontFamily="{StaticResource MaterialIcons}" FontSize="Large" TextColor="White"/>
+                                                <Label Text="{Binding Label}" TextColor="White" FontSize="8"/>
+                                            </StackLayout>
+                                        </Grid>
+                                    </Frame>
+                                </ViewCell>
+                            </DataTemplate>
+                        </listView:SfListView.SelectedItemTemplate>
+                        <listView:SfListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Frame CornerRadius="5" WidthRequest="80" BackgroundColor="{StaticResource Yellow}" VerticalOptions="FillAndExpand" Padding="5">
+                                        <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                                            <Frame BorderColor="Transparent" CornerRadius="5" Margin="2">
+                                                <Label Text="{Binding StringLogo}" FontFamily="{StaticResource MaterialIcons}" FontSize="Large" TextColor="Black"/>
+                                            </Frame>
+                                            <Label Text="{Binding Label}" VerticalOptions="CenterAndExpand" TextColor="Black" FontSize="8"/>
+                                        </StackLayout>
+                                    </Frame>
+                                </ViewCell>
+                            </DataTemplate>
+                        </listView:SfListView.ItemTemplate>
+                    </listView:SfListView>
+                </StackLayout>
+                <StackLayout Grid.Row="2" Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Padding="20,0">
+                    <Label Text="Choose" FontFamily="{StaticResource QuickSand-Bold}" FontSize="Large" Margin="3,0" TextColor="Black"/>
+                    <Label Text="Order" FontSize="Large" HorizontalOptions="StartAndExpand" TextColor="Black"/>
+                    <Label Text="Sort By " FontFamily="{StaticResource QuickSand-Bold}" FontSize="Small" HorizontalOptions="EndAndExpand" TextColor="Black"/>
+                    <Label Text="Popular" FontSize="Small" FontAttributes="Bold" TextColor="Black"/>
+                    <Label Text="{x:Static helper:IconFont.ArrowDownBold}" FontFamily="{StaticResource MaterialIcons}"/>
+                </StackLayout>
+                
+                <!-- Item List -->
+                <listView:SfListView x:Name="BeveragesControl" ItemsSource="{Binding BeveragesList}"
+                    IsVisible="True" Opacity="1" 
+                    Grid.Row="3" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+                    Padding="10"
+                    ItemSize="140"
+                    ItemSpacing="5"
+                    RowSpacing="5">
+                    <listView:SfListView.LayoutManager>
+                        <listView:GridLayout SpanCount="4" />
+                    </listView:SfListView.LayoutManager>
+                    <listView:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <button:SfButton BackgroundColor="White" HasShadow="False" HeightRequest="150" WidthRequest="120"
+                                                 Command="{Binding Source={x:Reference ItemList}, Path=BindingContext.AddItemCommand}"
+                                                 CommandParameter="{Binding .}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="90"/>
+                                            <RowDefinition Height="20"/>
+                                            <RowDefinition Height="10"/>
+                                            <RowDefinition Height="12"/>
+                                        </Grid.RowDefinitions>
+                                        <Frame Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="{StaticResource LightYellow}" 
+                                               HeightRequest="80" WidthRequest="80" CornerRadius="40"/>
+                                        <Image Grid.Row="0" Source="{Binding Image}" Aspect="AspectFit" Margin="10"/>
+                                        <Label Grid.Row="1" Text="{Binding Name}" FontSize="Small" TextColor="Black"/>
+                                        <Label Grid.Row="2" Text="{Binding Description}" FontSize="8" TextColor="{StaticResource LightGray}"/>
+                                        <Label Grid.Row="3" Text="{Binding UnitPrice, Converter={StaticResource CultureConverter}}" TextColor="{StaticResource LightGray}"/>
+                                    </Grid>
+                                </button:SfButton>
+                            </ViewCell>
+                        </DataTemplate>
+                    </listView:SfListView.ItemTemplate>
+                </listView:SfListView>
+                <listView:SfListView x:Name="CannedGoodsControl" ItemsSource="{Binding CannedGoodsList}"
+                    IsVisible="False" Opacity="0" 
+                    Grid.Row="3" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+                    Padding="10"
+                    ItemSize="140"
+                    ItemSpacing="5"
+                    RowSpacing="5">
+                    <listView:SfListView.LayoutManager>
+                        <listView:GridLayout SpanCount="4" />
+                    </listView:SfListView.LayoutManager>
+                    <listView:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <button:SfButton x:Name="ItemFrame" BackgroundColor="White" HasShadow="False" HeightRequest="150" WidthRequest="120"
+                                                 Command="{Binding Source={x:Reference ItemList}, Path=BindingContext.AddItemCommand}"
+                                                 CommandParameter="{Binding .}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="90"/>
+                                            <RowDefinition Height="20"/>
+                                            <RowDefinition Height="10"/>
+                                            <RowDefinition Height="12"/>
+                                        </Grid.RowDefinitions>
+                                        <Frame Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="{StaticResource LightYellow}" 
+                                               HeightRequest="80" WidthRequest="80" CornerRadius="40"/>
+                                        <Image Grid.Row="0" Source="{Binding Image}" Aspect="AspectFit" Margin="10"/>
+                                        <Label Grid.Row="1" Text="{Binding Name}" FontSize="Small" TextColor="Black"/>
+                                        <Label Grid.Row="2" Text="{Binding Description}" FontSize="8" TextColor="{StaticResource LightGray}"/>
+                                        <Label Grid.Row="3" Text="{Binding UnitPrice, Converter={StaticResource CultureConverter}}" TextColor="{StaticResource LightGray}"/>
+                                    </Grid>
+                                </button:SfButton>
+                            </ViewCell>
+                        </DataTemplate>
+                    </listView:SfListView.ItemTemplate>
+                </listView:SfListView>
+                <listView:SfListView x:Name="CleanersControl" ItemsSource="{Binding CleanersList}"
+                    IsVisible="False" Opacity="0" 
+                    Grid.Row="3" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+                    Padding="10"
+                    ItemSize="140"
+                    ItemSpacing="5"
+                    RowSpacing="5">
+                    <listView:SfListView.LayoutManager>
+                        <listView:GridLayout SpanCount="4" />
+                    </listView:SfListView.LayoutManager>
+                    <listView:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <button:SfButton x:Name="ItemFrame" BackgroundColor="White" HasShadow="False" HeightRequest="150" WidthRequest="120"
+                                                 Command="{Binding Source={x:Reference ItemList}, Path=BindingContext.AddItemCommand}"
+                                                 CommandParameter="{Binding .}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="90"/>
+                                            <RowDefinition Height="20"/>
+                                            <RowDefinition Height="10"/>
+                                            <RowDefinition Height="12"/>
+                                        </Grid.RowDefinitions>
+                                        <Frame Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="{StaticResource LightYellow}" 
+                                               HeightRequest="80" WidthRequest="80" CornerRadius="40"/>
+                                        <Image Grid.Row="0" Source="{Binding Image}" Aspect="AspectFit" Margin="10"/>
+                                        <Label Grid.Row="1" Text="{Binding Name}" FontSize="Small" TextColor="Black"/>
+                                        <Label Grid.Row="2" Text="{Binding Description}" FontSize="8" TextColor="{StaticResource LightGray}"/>
+                                        <Label Grid.Row="3" Text="{Binding UnitPrice, Converter={StaticResource CultureConverter}}" TextColor="{StaticResource LightGray}"/>
+                                    </Grid>
+                                </button:SfButton>
+                            </ViewCell>
+                        </DataTemplate>
+                    </listView:SfListView.ItemTemplate>
+                </listView:SfListView>
+                <listView:SfListView x:Name="DryGoodsControl" ItemsSource="{Binding DryGoodsList}"
+                    IsVisible="False" Opacity="0" 
+                    Grid.Row="3" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+                    Padding="10"
+                    ItemSize="140"
+                    ItemSpacing="5"
+                    RowSpacing="5">
+                    <listView:SfListView.LayoutManager>
+                        <listView:GridLayout SpanCount="4" />
+                    </listView:SfListView.LayoutManager>
+                    <listView:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <button:SfButton x:Name="ItemFrame" BackgroundColor="White" HasShadow="False" HeightRequest="150" WidthRequest="120"
+                                                 Command="{Binding Source={x:Reference ItemList}, Path=BindingContext.AddItemCommand}"
+                                                 CommandParameter="{Binding .}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="90"/>
+                                            <RowDefinition Height="20"/>
+                                            <RowDefinition Height="10"/>
+                                            <RowDefinition Height="12"/>
+                                        </Grid.RowDefinitions>
+                                        <Frame Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="{StaticResource LightYellow}" 
+                                               HeightRequest="80" WidthRequest="80" CornerRadius="40"/>
+                                        <Image Grid.Row="0" Source="{Binding Image}" Aspect="AspectFit" Margin="10"/>
+                                        <Label Grid.Row="1" Text="{Binding Name}" FontSize="Small" TextColor="Black"/>
+                                        <Label Grid.Row="2" Text="{Binding Description}" FontSize="8" TextColor="{StaticResource LightGray}"/>
+                                        <Label Grid.Row="3" Text="{Binding UnitPrice, Converter={StaticResource CultureConverter}}" TextColor="{StaticResource LightGray}"/>
+                                    </Grid>
+                                </button:SfButton>
+                            </ViewCell>
+                        </DataTemplate>
+                    </listView:SfListView.ItemTemplate>
+                </listView:SfListView>
+                <listView:SfListView x:Name="PaperGoodsControl" ItemsSource="{Binding PaperGoodsList}"
+                    IsVisible="False" Opacity="0" 
+                    Grid.Row="3" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+                    Padding="10"
+                    ItemSize="140"
+                    ItemSpacing="5"
+                    RowSpacing="5">
+                    <listView:SfListView.LayoutManager>
+                        <listView:GridLayout SpanCount="4" />
+                    </listView:SfListView.LayoutManager>
+                    <listView:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <button:SfButton x:Name="ItemFrame" BackgroundColor="White" HasShadow="False" HeightRequest="150" WidthRequest="120"
+                                                 Command="{Binding Source={x:Reference ItemList}, Path=BindingContext.AddItemCommand}"
+                                                 CommandParameter="{Binding .}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="90"/>
+                                            <RowDefinition Height="20"/>
+                                            <RowDefinition Height="10"/>
+                                            <RowDefinition Height="12"/>
+                                        </Grid.RowDefinitions>
+                                        <Frame Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="{StaticResource LightYellow}" 
+                                               HeightRequest="80" WidthRequest="80" CornerRadius="40"/>
+                                        <Image Grid.Row="0" Source="{Binding Image}" Aspect="AspectFit" Margin="10"/>
+                                        <Label Grid.Row="1" Text="{Binding Name}" FontSize="Small" TextColor="Black"/>
+                                        <Label Grid.Row="2" Text="{Binding Description}" FontSize="8" TextColor="{StaticResource LightGray}"/>
+                                        <Label Grid.Row="3" Text="{Binding UnitPrice, Converter={StaticResource CultureConverter}}" TextColor="{StaticResource LightGray}"/>
+                                    </Grid>
+                                </button:SfButton>
+                            </ViewCell>
+                        </DataTemplate>
+                    </listView:SfListView.ItemTemplate>
+                </listView:SfListView>
+                <listView:SfListView x:Name="PersonalCareControl" ItemsSource="{Binding PersonalCareList}"
+                    IsVisible="False" Opacity="0" 
+                    Grid.Row="3" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+                    Padding="10"
+                    ItemSize="140"
+                    ItemSpacing="5"
+                    RowSpacing="5">
+                    <listView:SfListView.LayoutManager>
+                        <listView:GridLayout SpanCount="4" />
+                    </listView:SfListView.LayoutManager>
+                    <listView:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <button:SfButton x:Name="ItemFrame" BackgroundColor="White" HasShadow="False" HeightRequest="150" WidthRequest="120"
+                                                 Command="{Binding Source={x:Reference ItemList}, Path=BindingContext.AddItemCommand}"
+                                                 CommandParameter="{Binding .}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="90"/>
+                                            <RowDefinition Height="20"/>
+                                            <RowDefinition Height="10"/>
+                                            <RowDefinition Height="12"/>
+                                        </Grid.RowDefinitions>
+                                        <Frame Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="{StaticResource LightYellow}" 
+                                               HeightRequest="80" WidthRequest="80" CornerRadius="40"/>
+                                        <Image Grid.Row="0" Source="{Binding Image}" Aspect="AspectFit" Margin="10"/>
+                                        <Label Grid.Row="1" Text="{Binding Name}" FontSize="Small" TextColor="Black"/>
+                                        <Label Grid.Row="2" Text="{Binding Description}" FontSize="8" TextColor="{StaticResource LightGray}"/>
+                                        <Label Grid.Row="3" Text="{Binding UnitPrice, Converter={StaticResource CultureConverter}}" TextColor="{StaticResource LightGray}"/>
+                                    </Grid>
+                                </button:SfButton>
+                            </ViewCell>
+                        </DataTemplate>
+                    </listView:SfListView.ItemTemplate>
+                </listView:SfListView>
+                <listView:SfListView x:Name="OthersControl" ItemsSource="{Binding OthersList}"
+                    IsVisible="False" Opacity="0" 
+                    Grid.Row="3" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+                    Padding="10"
+                    ItemSize="140"
+                    ItemSpacing="5"
+                    RowSpacing="5">
+                    <listView:SfListView.LayoutManager>
+                        <listView:GridLayout SpanCount="4" />
+                    </listView:SfListView.LayoutManager>
+                    <listView:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <button:SfButton x:Name="ItemFrame" BackgroundColor="White" HasShadow="False" HeightRequest="150" WidthRequest="120"
+                                                 Command="{Binding Source={x:Reference ItemList}, Path=BindingContext.AddItemCommand}"
+                                                 CommandParameter="{Binding .}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="90"/>
+                                            <RowDefinition Height="20"/>
+                                            <RowDefinition Height="10"/>
+                                            <RowDefinition Height="12"/>
+                                        </Grid.RowDefinitions>
+                                        <Frame Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="{StaticResource LightYellow}" 
+                                               HeightRequest="80" WidthRequest="80" CornerRadius="40"/>
+                                        <Image Grid.Row="0" Source="{Binding Image}" Aspect="AspectFit" Margin="10"/>
+                                        <Label Grid.Row="1" Text="{Binding Name}" FontSize="Small" TextColor="Black"/>
+                                        <Label Grid.Row="2" Text="{Binding Description}" FontSize="8" TextColor="{StaticResource LightGray}"/>
+                                        <Label Grid.Row="3" Text="{Binding UnitPrice, Converter={StaticResource CultureConverter}}" TextColor="{StaticResource LightGray}"/>
+                                    </Grid>
+                                </button:SfButton>
+                            </ViewCell>
+                        </DataTemplate>
+                    </listView:SfListView.ItemTemplate>
+                </listView:SfListView>
+            </Grid>
+            
+            <!-- EReceipt -->
+            <Grid Grid.Column="1" HorizontalOptions="FillAndExpand" BackgroundColor="White" VerticalOptions="FillAndExpand">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+                <StackLayout Grid.Row="0" Orientation="Horizontal" HorizontalOptions="FillAndExpand" Padding="10">
+                    <Label Text="Order" FontFamily="{StaticResource QuickSand-Bold}"/>
+                    <Label Text="Menu" HorizontalOptions="StartAndExpand"/>
+                    <Frame HasShadow="True" HorizontalOptions="EndAndExpand" HeightRequest="20" WidthRequest="20" CornerRadius="7">
+                        <Label Text="{x:Static helper:IconFont.SquareEditOutline}" FontFamily="{StaticResource MaterialIcons}"/>
+                    </Frame>
+                </StackLayout>
+                <listView:SfListView Grid.Row="1" 
+                                     ItemsSource="{Binding EReceipt.Items}"
+                                     AllowSwiping="True">
+                    <listView:SfListView.SelectedItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid BackgroundColor="{StaticResource Red}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="30"/>
+                                        <ColumnDefinition Width="50"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="0">
+                                        <Image Source="{Binding Image}"/>
+                                    </Grid>
+                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding Name}" LineBreakMode="TailTruncation" TextColor="White" FontFamily="{StaticResource QuickSand-SemiBold}" FontSize="Micro" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="End"/>
+                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding UnitPrice, Converter={StaticResource CultureConverter}}" TextColor="White" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="Start"/>
+                                    <Label Grid.RowSpan="2" Grid.Column="2" Text="{Binding Quantity, StringFormat='x{0}'}" TextColor="White" FontFamily="{StaticResource QuickSand-SemiBold}"/>
+                                    <Label Grid.RowSpan="2" Grid.Column="3" Text="{Binding TotalPrice, Converter={StaticResource CultureConverter}}" TextColor="White" FontFamily="{StaticResource QuickSand-SemiBold}"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </listView:SfListView.SelectedItemTemplate>
+                    <listView:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid RowSpacing="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="30"/>
+                                        <ColumnDefinition Width="50"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="0">
+                                        <Image Source="{Binding Image}"/>
+                                    </Grid>
+                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding Name}" LineBreakMode="TailTruncation" FontFamily="{StaticResource QuickSand-SemiBold}" FontSize="Micro" TextColor="Black" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="End"/>
+                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding UnitPrice, Converter={StaticResource CultureConverter}}" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="Start"/>
+                                    <Label Grid.RowSpan="2" Grid.Column="2" Text="{Binding Quantity, StringFormat='x{0}'}" FontFamily="{StaticResource QuickSand-SemiBold}"/>
+                                    <Label Grid.RowSpan="2" Grid.Column="3" Text="{Binding TotalPrice, Converter={StaticResource CultureConverter}}" FontFamily="{StaticResource QuickSand-SemiBold}"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </listView:SfListView.ItemTemplate>
+                    <listView:SfListView.RightSwipeTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <!--<ColumnDefinition/>-->
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <!--<button:SfButton Grid.Column="0" BackgroundColor="{StaticResource LightYellow}"
+                                                 Command="{Binding Source={x:Reference ItemList}, Path=BindingContext.EditCommand}"
+                                                 CommandParameter="{Binding .}">
+                                    <button:SfButton.Content>
+                                        <StackLayout>
+                                            <Label Text="{x:Static helper:IconFont.SquareEditOutline}" FontFamily="{StaticResource MaterialIcons}" HorizontalOptions="Center" VerticalOptions="End"/>
+                                            <Label Text="Edit" HorizontalOptions="Center" VerticalOptions="Start"/>
+                                        </StackLayout>
+                                    </button:SfButton.Content>
+                                </button:SfButton>-->
+                                <button:SfButton Grid.Column="1" BackgroundColor="{StaticResource Red}"
+                                                 Command="{Binding Source={x:Reference ItemList}, Path=BindingContext.DeleteCommand}"
+                                                 CommandParameter="{Binding .}">
+                                    <button:SfButton.Content>
+                                        <StackLayout>
+                                            <Label Text="{x:Static helper:IconFont.Delete}" FontFamily="{StaticResource MaterialIcons}" FontSize="Medium" TextColor="White" HorizontalOptions="Center" VerticalOptions="End"/>
+                                            <Label Text="Delete" TextColor="White" HorizontalOptions="Center" VerticalOptions="Start"/>
+                                        </StackLayout>
+                                    </button:SfButton.Content>
+                                </button:SfButton>
+                            </Grid>
+                        </DataTemplate>
+                    </listView:SfListView.RightSwipeTemplate>
+                </listView:SfListView>
+                
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <BoxView Grid.ColumnSpan="2" HorizontalOptions="FillAndExpand" VerticalOptions="Start" HeightRequest="1" Margin="20,0" BackgroundColor="{StaticResource LightYellow}"/>
+                    <Label Grid.Row="0" Grid.Column="0" Text="Sub Total"/>
+                    <Label Grid.Row="1" Grid.Column="0" Text="PB (5%)"/>
+                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding EReceipt.Total, Converter={StaticResource CultureConverter}}"/>
+                    <Label Grid.Row="1" Grid.Column="1" Text="$0.00"/>
+                </Grid>
+                
+                <button:SfButton Grid.Row="3" Margin="10" CornerRadius="10" HasShadow="True" Command="{Binding ChargeCommand}">
+                    <button:SfButton.BackgroundGradient>
+                        <gradient:SfLinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <gradient:SfLinearGradientBrush.GradientStops>
+                                <gradient:SfGradientStop Color="{StaticResource Red}" Offset="0"/>
+                                <gradient:SfGradientStop Color="{StaticResource RedShadow}" Offset="1"/>
+                            </gradient:SfLinearGradientBrush.GradientStops>
+                        </gradient:SfLinearGradientBrush>
+                    </button:SfButton.BackgroundGradient>
+                    <button:SfButton.Content>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                            <Label Text="Charge " TextColor="White" FontSize="Medium" FontFamily="{StaticResource QuickSand-Bold}"/>
+                            <Label Text="{Binding EReceipt.Total, Converter={StaticResource CultureConverter}}" TextColor="White" FontSize="Medium"/>
+                        </StackLayout>
+                    </button:SfButton.Content>
+                </button:SfButton>
+            </Grid>
+        </Grid>
+    </ContentView.Content>
+</ContentView>
